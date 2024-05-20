@@ -36,6 +36,15 @@ void usart_transmit_flash_string(char *str)
     }
 }
 
+void usart_transmit_string(char *str)
+{
+    while (*str)
+    {
+        usart_transmit(*str);
+        str++;
+    }
+}
+
 char _convert_hex(char x)
 {
     char v = x & 0xf;

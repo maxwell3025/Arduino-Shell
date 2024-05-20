@@ -6,7 +6,8 @@ int main()
     usart_init();
     char command_buffer[128];
     unsigned int command_length;
-    while(1){
+    while (1)
+    {
         unsigned char c = usart_receive();
         switch (c)
         {
@@ -20,11 +21,14 @@ int main()
             usart_transmit_flash_string("\b \b");
             command_buffer[--command_length] = '\0';
             break;
-        
+
         default:
-            if(is_printing(c)){
+            if (is_printing(c))
+            {
                 usart_transmit(c);
-            } else {
+            }
+            else
+            {
                 usart_transmit_hex_number(c);
             }
             command_buffer[command_length++] = c;

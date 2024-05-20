@@ -5,8 +5,12 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": ["F_CPU=16000000UL"],
-            "compilerArgs": ["-mmcu=atmega328p"],
+            "defines": [
+                "F_CPU=16000000UL"
+            ],
+            "compilerArgs": [
+                "-mmcu=atmega328p"
+            ],
             "compilerPath": "/usr/bin/avr-gcc",
             "cStandard": "c17",
             "cppStandard": "gnu++17",

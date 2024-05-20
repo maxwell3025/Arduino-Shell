@@ -27,29 +27,38 @@ unsigned char usart_receive()
     return UDR0;
 }
 
-void usart_transmit_flash_string(char *str){
+void usart_transmit_flash_string(char *str)
+{
     unsigned char c;
-    while(c = pgm_read_byte(str++)){
+    while (c = pgm_read_byte(str++))
+    {
         usart_transmit(c);
     }
 }
 
-char _convert_hex(char x){
+char _convert_hex(char x)
+{
     char v = x & 0xf;
-    if(v < 10) {
+    if (v < 10)
+    {
         return '0' + v;
-    } else if (v < 16) {
+    }
+    else if (v < 16)
+    {
         return 'A' - 10 + v;
-    } else {
+    }
+    else
+    {
         return 'X';
     }
 }
 
-void usart_transmit_hex_number(unsigned int x){
+void usart_transmit_hex_number(unsigned int x)
+{
     usart_transmit('0');
     usart_transmit('x');
     usart_transmit(_convert_hex(x >> 12));
-    usart_transmit(_convert_hex(x >> 8 ));
-    usart_transmit(_convert_hex(x >> 4 ));
-    usart_transmit(_convert_hex(x >> 0 ));
+    usart_transmit(_convert_hex(x >> 8));
+    usart_transmit(_convert_hex(x >> 4));
+    usart_transmit(_convert_hex(x >> 0));
 }

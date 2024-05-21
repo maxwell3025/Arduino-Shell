@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include "usart.h"
+#include "util.h"
 
 #define BAUD 9600
 #define UBRR (F_CPU / 16 / BAUD - 1)
@@ -42,6 +43,28 @@ void usart_transmit_string(char *str)
     {
         usart_transmit(*str);
         str++;
+    }
+}
+
+void usart_debug_string(char *str, unsigned int limit)
+{
+    unsigned int len = 0;
+    while (*str && len < limit)
+    {
+        if (is_printing(*str))
+        {
+            usart_transmit('\'');
+            usart_transmit(*str);
+            usart_transmit('\'');
+        } else {
+            usart_transmit('\'');
+            usart_transmit('\\');
+            usart_transmit_hex_number(*str);
+            usart_transmit('\'');
+        }
+        usart_transmit(' ');
+        str++;
+        len++;
     }
 }
 

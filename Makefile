@@ -6,7 +6,7 @@ out/shell.hex: out/shell.elf
 	avr-objcopy -O ihex -R .eeprom out/shell.elf out/shell.hex
 
 out/shell.elf: $(OBJS) src/shell.lds
-	avr-ld -T src/shell.lds $(OBJS) -o out/shell.elf
+	avr-ld -T src/shell.lds $(OBJS) -L/lib/avr/lib -lc -o out/shell.elf
 	avr-objdump -Ds out/shell.elf > out/debug/shell.elf.dump
 
 out/%.o: src/%.S

@@ -1,24 +1,27 @@
 #include <string.h>
 #include "usart.h"
 #include "util.h"
+#include "echo.h"
 
-void interpret_command(char *command)
+int (*lookup(char *name))(int argc, char *args[])
+{
+    return &echo;
+}
+
+int interpret_command(char *command)
 {
     char delim[] = {' ', '\0'};
     delim[0] = ' ';
-    const char *args[10];
+    char *args[10];
     unsigned int argc = 0;
-    const char *tok = strtok(command, delim);
+    char *tok = strtok(command, delim);
     while (tok != NULL)
     {
         args[argc++] = tok;
         tok = strtok(NULL, delim);
     }
-    for (int i = 0; i < argc; i++)
-    {
-        usart_transmit_flash_string("\r\n-> ");
-        usart_transmit_string(args[i]);
-    }
+    int (*program)(int argc, char *args[]) = lookup(args[0]);
+    return (*program)(argc, args);
 }
 
 int main()
@@ -35,9 +38,10 @@ int main()
         {
         case '\r':
             command_buffer[command_length] = '\0';
-            interpret_command(command_buffer);
+            usart_transmit_flash_string("\r\n");
+            usart_transmit_hex_number(interpret_command(command_buffer));
+            usart_transmit_flash_string(" $ ");
             command_length = 0;
-            usart_transmit_flash_string("\r\n$ ");
             break;
 
         case '\b':

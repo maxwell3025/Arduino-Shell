@@ -4,7 +4,6 @@ SECTIONS
     .text :
     {
         *(.ivt)
-        . = 0x0036;
         *(.text*)
     }
     .data : { *(.rodata*) *(.data*) }

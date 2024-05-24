@@ -4,6 +4,11 @@
         "*.vsh": "glsl",
         "string.h": "c",
         "util.h": "c",
-        "usart.h": "c"
+        "usart.h": "c",
+        "scheduler.h": "c",
+        "pgmspace.h": "c",
+        "io.h": "c",
+        "iom328p.h": "c",
+        "interrupt.h": "c"
     }
 }

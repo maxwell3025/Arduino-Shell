@@ -1,29 +1,60 @@
 ; Defines the interrupt vector table for the project
 
 .section .ivt
-    jmp main    ; RESET: jumps to main
-    reti        ; INT0
-    reti        ; INT1
-    reti        ; PCINT0
-    reti        ; PCINT1
-    reti        ; PCINT2
-    reti        ; WDT
-    reti        ; TIMER2 COMPA
-    reti        ; TIMER2 COMPB
-    reti        ; TIMER2 OVF
-    reti        ; TIMER1 CAPT
-    reti        ; TIMER1 COMPA
-    reti        ; TIMER1 COMPB
-    reti        ; TIMER1 OVF
-    reti        ; TIMER0 COMPA
-    reti        ; TIMER0 COMPB
-    reti        ; TIMER0 OVF
-    reti        ; SPI, STC
-    reti        ; USART, RX
-    reti        ; USART, UDRE
-    reti        ; USART, TX
-    reti        ; ADC
-    reti        ; EE READY
-    reti        ; ANALOG COMP
-    reti        ; TWI
-    reti        ; SPM READY
+.vtable:
+    jmp main                   ; RESET: jumps to main
+    reti                       ; INT0
+    nop
+    reti                       ; INT1
+    nop
+    reti                       ; PCINT0
+    nop
+    reti                       ; PCINT1
+    nop
+    reti                       ; PCINT2
+    nop
+    reti                       ; WDT
+    nop
+    reti                       ; TIMER2 COMPA
+    nop
+    reti                       ; TIMER2 COMPB
+    nop
+    reti                       ; TIMER2 OVF
+    nop
+    reti                       ; TIMER1 CAPT
+    nop
+    jmp context_switch_asm     ; TIMER1 COMPA
+    reti                       ; TIMER1 COMPB
+    nop
+    jmp context_switch_asm     ; TIMER1 OVF
+    reti                       ; TIMER0 COMPA
+    nop
+    reti                       ; TIMER0 COMPB
+    nop
+    reti                       ; TIMER0 OVF
+    nop
+    reti                       ; SPI, STC
+    nop
+    reti                       ; USART, RX
+    nop
+    reti                       ; USART, UDRE
+    nop
+    reti                       ; USART, TX
+    nop
+    reti                       ; ADC
+    nop
+    reti                       ; EE READY
+    nop
+    reti                       ; ANALOG COMP
+    nop
+    reti                       ; TWI
+    nop
+    reti                       ; SPM READY
+    nop
+
+.timer1_compa_handler:
+    jmp context_switch_asm
+
+.reset_handler:
+    jmp main
+

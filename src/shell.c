@@ -2,6 +2,7 @@
 #include "usart.h"
 #include "util.h"
 #include "echo.h"
+#include "scheduler.h"
 
 int (*lookup(char *name))(int argc, char *args[])
 {
@@ -27,6 +28,7 @@ int interpret_command(char *command)
 int main()
 {
     usart_init();
+    init_asm();
     usart_transmit_flash_string("$ ");
     char command_buffer[128];
     unsigned int command_length = 0;

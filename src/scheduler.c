@@ -26,11 +26,6 @@ void enter_kernel()
     
 }
 
-void resume()
-{
-
-}
-
 void begin_program(int (*program_main)(int argc, char *args[]), int argc, char *args[])
 {
     (*program_main)(argc, args);

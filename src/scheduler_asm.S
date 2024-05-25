@@ -70,5 +70,45 @@ context_switch_asm:
     sts current_program_sp_l, r25
     
     call context_switch
+; continue to routine for entering user space
+exit_kernel:
+    ; load stack pointer
+    lds r24, current_program_sp_h
+    lds r25, current_program_sp_l
+    sts SPH, r24
+    sts SPL, r25
 
+    ; load registers
+    lds r0, current_program_register(0) 
+    lds r1, current_program_register(1) 
+    lds r2, current_program_register(2) 
+    lds r3, current_program_register(3) 
+    lds r4, current_program_register(4) 
+    lds r5, current_program_register(5) 
+    lds r6, current_program_register(6) 
+    lds r7, current_program_register(7) 
+    lds r8, current_program_register(8) 
+    lds r9, current_program_register(9) 
+    lds r10, current_program_register(10)
+    lds r11, current_program_register(11)
+    lds r12, current_program_register(12)
+    lds r13, current_program_register(13)
+    lds r14, current_program_register(14)
+    lds r15, current_program_register(15)
+    lds r16, current_program_register(16)
+    lds r17, current_program_register(17)
+    lds r18, current_program_register(18)
+    lds r19, current_program_register(19)
+    lds r20, current_program_register(20)
+    lds r21, current_program_register(21)
+    lds r22, current_program_register(22)
+    lds r23, current_program_register(23)
+    lds r24, current_program_register(24)
+    lds r25, current_program_register(25)
+    lds r26, current_program_register(26)
+    lds r27, current_program_register(27)
+    lds r28, current_program_register(28)
+    lds r29, current_program_register(29)
+    lds r30, current_program_register(30)
+    lds r31, current_program_register(31)
     reti

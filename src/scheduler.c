@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include "scheduler.h"
 #include "usart.h"
+#include "shell.h"
 
 enum ProgramState
 {
@@ -16,6 +17,7 @@ struct Program
 
 void init()
 {
+    usart_init();
     // num_programs = 1;
 }
 
@@ -36,11 +38,11 @@ void begin_program(int (*program_main)(int argc, char *args[]), int argc, char *
 
 void dump_program(){
     for(int reg_number = 0; reg_number < 32; reg_number++){
-    usart_transmit_flash_string("r");
-    usart_transmit_hex_number(reg_number);
-    usart_transmit_flash_string(":\t");
-    usart_transmit_hex_number(current_program.registers[reg_number]);
-    usart_transmit_flash_string("\r\n");
+        usart_transmit_flash_string("r");
+        usart_transmit_hex_number(reg_number);
+        usart_transmit_flash_string(":\t");
+        usart_transmit_hex_number(current_program.registers[reg_number]);
+        usart_transmit_flash_string("\r\n");
     }
     usart_transmit_flash_string("SP:\t");
     usart_transmit_hex_number(current_program.sp);

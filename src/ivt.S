@@ -2,7 +2,7 @@
 
 .section .ivt
 .vtable:
-    jmp main                   ; RESET: jumps to main
+    jmp init_asm               ; RESET: jumps to main
     reti                       ; INT0
     nop
     reti                       ; INT1

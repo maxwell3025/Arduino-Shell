@@ -6,9 +6,7 @@
 
 ; NOTE: only jump to this when you are using the real stack
 init_asm:
-    call usart_transmit
-
-    ldi r24, 0x01
+    ldi r24, 0x80
     ldi r25, 0x00
     sts OCR1AH, r24
     sts OCR1AL, r25
@@ -26,6 +24,7 @@ init_asm:
 
     call init
     sei
+    call main
     ret;
 
 
@@ -71,4 +70,5 @@ context_switch_asm:
     sts current_program_sp_l, r25
     
     call context_switch
+
     reti

@@ -51,10 +51,3 @@
     nop
     reti                       ; SPM READY
     nop
-
-.timer1_compa_handler:
-    jmp context_switch_asm
-
-.reset_handler:
-    jmp main
-

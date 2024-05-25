@@ -1,3 +1,4 @@
+#include "scheduler_defs.h"
 
 void init();
 void init_asm();

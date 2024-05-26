@@ -9,6 +9,7 @@
         "pgmspace.h": "c",
         "io.h": "c",
         "iom328p.h": "c",
-        "interrupt.h": "c"
+        "interrupt.h": "c",
+        "scheduler_defs.h": "c"
     }
 }

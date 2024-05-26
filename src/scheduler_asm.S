@@ -23,9 +23,7 @@ init_asm:
     sts TCCR1B, r25
 
     call init
-    sei
-    call main
-    ret;
+    jmp exit_kernel
 
 
 context_switch_asm:
@@ -69,6 +67,11 @@ context_switch_asm:
     sts current_program_sp_h, r24
     sts current_program_sp_l, r25
     
+    ; reset stack
+    ldi r24, 0x08
+    ldi r25, 0xFF
+    sts SPH, r24
+    sts SPL, r25
     call context_switch
 ; continue to routine for entering user space
 exit_kernel:

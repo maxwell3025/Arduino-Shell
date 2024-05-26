@@ -18,12 +18,17 @@ struct Program
 void init()
 {
     usart_init();
-    // num_programs = 1;
-}
+    // initialize first program
+    for(int i = 0; i < 32; i++){
+        current_program.registers[i] = 0;
+    }
 
-void enter_kernel()
-{
-    
+    current_program.sp = RAMEND - 0x200;
+    *((unsigned char *)current_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(&main) >> 0);
+    current_program.sp--;
+    *((unsigned char *)current_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(&main) >> 8);
+    current_program.sp--;
+    num_programs = 1;
 }
 
 void begin_program(int (*program_main)(int argc, char *args[]), int argc, char *args[])

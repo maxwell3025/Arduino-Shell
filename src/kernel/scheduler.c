@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <stddef.h>
 #include "scheduler.h"
 #include "usart.h"
 #include "../shell.h"
@@ -12,28 +13,40 @@ enum ProgramState
 struct Program
 {
     unsigned char registers[32];
-    unsigned int sp ;
+    unsigned int sp;
+    unsigned int stack_base;
+    unsigned int pid;
+    enum ProgramState state;
 };
+
+struct Program *get_program_list(){
+    return &current_program + 1;
+}
+
+void begin_program(int (*program_main)(int argc, char *args[]), int argc, char *args[])
+{
+    struct Program new_program;
+
+    for(int i = 0; i < 32; i++){
+        new_program.registers[i] = 0;
+    }
+
+    new_program.sp = RAMEND - 0x200;
+    *((unsigned char *)new_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(program_main) >> 0);
+    new_program.sp--;
+    *((unsigned char *)new_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(program_main) >> 8);
+    new_program.sp--;
+
+    get_program_list()[num_programs++] = new_program;
+}
 
 void init()
 {
     usart_init();
     // initialize first program
-    for(int i = 0; i < 32; i++){
-        current_program.registers[i] = 0;
-    }
-
-    current_program.sp = RAMEND - 0x200;
-    *((unsigned char *)current_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(&main) >> 0);
-    current_program.sp--;
-    *((unsigned char *)current_program.sp) = (unsigned char)((unsigned int)(unsigned char *)(&main) >> 8);
-    current_program.sp--;
-    num_programs = 1;
-}
-
-void begin_program(int (*program_main)(int argc, char *args[]), int argc, char *args[])
-{
-    (*program_main)(argc, args);
+    num_programs = 0;
+    begin_program(&main, 0, NULL);
+    current_program = get_program_list()[0];
 }
 
 void dump_program(){

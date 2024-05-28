@@ -1,5 +1,5 @@
-C_SRC := $(wildcard src/*.c)
-ASM_SRC := $(wildcard src/*.S)
+C_SRC := $(wildcard src/**/*.c) $(wildcard src/*.c)
+ASM_SRC := $(wildcard src/**/*.S) $(wildcard src/*.S)
 OBJS := $(patsubst src/%.c,out/%.o,$(C_SRC)) $(patsubst src/%.S,out/%.o,$(ASM_SRC))
 
 out/shell.hex: out/shell.elf

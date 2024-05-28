@@ -1,5 +1,5 @@
 #include "echo.h"
-#include "usart.h"
+#include "kernel/usart.h"
 
 int echo(int argc, char *args[])
 {

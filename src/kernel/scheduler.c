@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include "scheduler.h"
 #include "usart.h"
-#include "shell.h"
+#include "../shell.h"
 
 enum ProgramState
 {

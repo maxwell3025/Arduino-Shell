@@ -1,8 +1,7 @@
 #include <string.h>
-#include "usart.h"
-#include "util.h"
+#include "kernel/usart.h"
+#include "kernel/util.h"
 #include "echo.h"
-#include "scheduler.h"
 
 int (*lookup(char *name))(int argc, char *args[])
 {
